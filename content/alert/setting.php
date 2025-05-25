@@ -1,0 +1,5 @@
+<?php 
+return array (
+  'content' => '<p class="mb-1" style="margin-top: 0px; color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; text-wrap: wrap; margin-bottom: 0.25rem !important;">我们的工作时间：周一 至 周五（10:00 ~ 20:00）</p><p class="mb-1 mt-2 sm text-muted" style="font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 14px; text-wrap: wrap; margin-top: 0.5rem !important; margin-bottom: 0.25rem !important; color: rgb(108, 117, 125) !important;">将在上班后第一时间内联系您进行处理！如因此给您造成了不便，还请谅解将在上班后第一时间内联系您进行处理！如因此给您造成了不便，还请谅解</p>',
+)
+?>

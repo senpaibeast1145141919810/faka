@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$options.title}</title>
+    <meta name="keywords" content="邀请码吧, 98堂邀请码, 98堂金币充值, 色花堂邀请码专营店, 色花堂金币充值">
+    <meta name="description" content="欢迎来到邀请码吧，您的98堂（色花堂）邀请码和98堂（色花堂）金币充值专营店。我们提供高品质的98堂（色花堂）邀请码和98堂（色花堂）金币充值服务。购买98堂（色花堂）邀请码和98堂（色花堂）金币充值，尽在邀请码吧发卡网。">
+    <link href="__CDN__/assets/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .rich_media_title {
+            font-size: 22px;
+            line-height: 1.4;
+            margin-bottom: 14px;
+
+        }
+        a:hover{
+            text-decoration: none;
+        }
+
+        .rich_media_title {
+            font-size: 22px;
+            line-height: 1.4;
+            margin-bottom: 14px;
+
+        }
+        .blog-masthead {
+            background-color: #428bca;
+            -webkit-box-shadow: inset 0 -2px 5px rgba(0, 0, 0, .1);
+            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, .1);
+        }
+        .blog-nav-item {
+            position: relative;
+            display: inline-block;
+            padding: 10px;
+            font-weight: 500;
+            color: #cdddeb;
+        }
+        .blog-nav .active {
+            color: #fff;
+        }
+        .blog-nav .active:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            margin-left: -5px;
+            vertical-align: middle;
+            content: " ";
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid;
+            border-left: 5px solid transparent;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blog-masthead">
+        <div class="container">
+            <nav class="blog-nav">
+                <a class="blog-nav-item" href="{:url('/')}">网站首页</a>
+                <a class="blog-nav-item active" href="{:url('/blog')}">色花堂—新人常见问题答疑</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 20px;">
+
+        <div class="row">
+            {volist name="list" id="vo"}
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <a href="{:url('/blog/' . $vo.id)}">
+                        <img src="{$vo.cover}" alt="{$vo.title}">
+                        <div class="caption">
+                            <h4>{$vo.title}</h4>
+                            <p>{$vo.description}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {/volist}
+        </div>
+
+        {$paginate}
+    </div>
+
+</body>
+</html>

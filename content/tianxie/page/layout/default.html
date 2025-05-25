@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>{:$is_main ? $options.title : $merchant.title}</title>
+    <meta name="keywords" content="{$options.keywords}">
+    <meta name="description" content="{$options.description}">
+    <link rel="shortcut icon" href="{$options.icon|default=''}" type="image/png">
+
+    <link rel="stylesheet" href="__CDN__/common/bootstrap-4.6.2-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__CDN__/assets/libs/toastr/toastr.min.css" />
+    <link rel="stylesheet" href="__CDN__/template/tianxie/css/style.css" />
+
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="d996f719-ee4a-43f7-8d32-bbbf7abbbbf3";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+    {block name="head"}{/block}
+</head>
+
+<body>
+<div class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-xl">
+        <a href="/"><img src="/uploads/20230914/06edab163b0c8e0413164f3775ccdaa9.png" height="36"></a>
+        <a class="navbar-brand" href="/" style="font-size:18px;color:#ff75af">{$options.name}</a>
+        
+        <button id="nav-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header-navi" aria-controls="header-navi" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        
+        <div class="collapse navbar-collapse" id="header-navi">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">首页</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{:url('/find_order')}">查找订单</a>
+                </li>
+                 <li class="nav-item ">
+                    <a class="nav-link" href="https://yqm8.cc/blog">98堂—新人常见问题答疑</a>
+                </li>
+             
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div style="width: 100%; height: 55px;"></div>
+
+<div class="container-xl" id="content">
+    {block name="content"}{/block}
+
+
+
+    <div class="laypro_footer">
+
+        <center>
+            <a>邀请码吧—专注98堂/色花堂邀请码</a> 
+        </center>
+        
+<div class="footer-widget-content"><div class="textwidget"> 
+<p> <a href="https://yqm8.cc/custom/user_ment" rel="nofollow"> 关于我们 </a> 
+	<a href="https://yqm8.cc/custom/private_ment" rel="nofollow"> 广告合作 </a>  
+</p> 
+<br> 
+
+</div>
+        
+        
+        <center>{$options.corporate_name}</center>
+       
+        <div>
+            <a href="https://beian.miit.gov.cn/#/Integrated/index" style="color: #666;"></a>
+        </div>
+        <div>
+            <a href="https://beian.miit.gov.cn/#/Integrated/index" style="color: #666;"></a>
+        </div>
+        <!--流量统计代码-->
+        <span id="statistics"></span>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<script src="__CDN__/common/jquery/jquery-1.10.2.min.js"></script>
+<script src="__CDN__/common/bootstrap-4.6.2-dist/js/bootstrap.min.js"></script>
+<script src="__CDN__/assets/libs/fastadmin-layer/dist/layer.js"></script>
+<script src="__CDN__/assets/libs/toastr/toastr.js"></script>
+
+{$options.custom_code|default=''}
+
+{block name="footjs"}{/block}
+{:doAction('footjs')}
+
+</body>
+
+</html>

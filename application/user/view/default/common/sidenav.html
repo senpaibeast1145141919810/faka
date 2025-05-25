@@ -1,0 +1,29 @@
+<div class="sidebar-toggle"><i class="fa fa-bars"></i></div>
+<div class="sidenav" id="sidebar-nav">
+    {:hook('user_sidenav_before')}
+    
+    <ul class="list-group">
+     
+        <li class="list-group-item {:check_nav_active('user/findorder')}"> 
+            <a href="{:url('/find_order')}"><i class="fa fa-user-circle fa-fw"></i> 查找订单</a> </li>
+        
+    </ul>
+    
+    <!--<div class="checkout-address" style="padding: 20px;">
+        <div class="checkout-address__header">
+            <div class="text-label" style="display: inline-block; font-size: 16px; font-weight: 500;"><span>站长寄语</span></div>
+            <div class="btn-control" style="display: inline-block; float: right; margin-top: -11px;">
+                <button class="btn btn-icon-only" type="button">
+                    <svg xmlns="https://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="checkout-address__body" style="clear: both; font-size: 13px;">
+            <div class="address">在未来的每一秒，你都将是全新的自己。</div>
+        </div>
+    </div>-->
+    {:hook('user_sidenav_after')}
+</div>

@@ -1,0 +1,108 @@
+<form id="setting-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">开启设备</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="checkbox">
+                <label><input name="eq[]" type="checkbox" value="mobile" {if condition="empty($row.eq) || in_array('mobile', $row.eq)"}checked{/if}>手机</label>
+                <label><input name="eq[]" type="checkbox" value="pc" {if condition="empty($row.eq) || in_array('pc', $row.eq)"}checked{/if}>电脑</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">顶部主标题</label>
+        <div class="col-xs-12 col-sm-8">
+            <input class="form-control" name="top_title" type="text" value="{$row.top_title|default=''|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">顶部副标题</label>
+        <div class="col-xs-12 col-sm-8">
+            <input class="form-control" name="top_title_des" type="text" value="{$row.top_title_des|default=''|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">底部主标题</label>
+        <div class="col-xs-12 col-sm-8">
+            <input class="form-control" name="bottom_title" type="text" value="{$row.bottom_title|default=''|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">底部副标题</label>
+        <div class="col-xs-12 col-sm-8">
+            <input class="form-control" name="bottom_title_des" type="text" value="{$row.bottom_title_des|default=''|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">工作时间</label>
+        <div class="col-xs-12 col-sm-8">
+            <input class="form-control" name="job_time" type="text" value="{$row.job_time|default=''|htmlentities}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">工作介绍</label>
+        <div class="col-xs-12 col-sm-8">
+            <input class="form-control" name="job_des" type="text" value="{$row.job_des|default=''|htmlentities}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">销量</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="checkbox">
+                <label><input name="sales" type="radio" value="1" {if condition="isset($row.sales) && $row.sales == 1"}checked{/if}>显示</label>
+                <label><input name="sales" type="radio" value="0" {if condition="isset($row.sales) && $row.sales == 0"}checked{/if}>隐藏</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">库存</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="checkbox">
+                <label><input name="stock" type="radio" value="1" {if condition="isset($row.stock) && $row.stock == 1"}checked{/if}>显示</label>
+                <label><input name="stock" type="radio" value="0" {if condition="isset($row.stock) && $row.stock == 0"}checked{/if}>隐藏</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">公告状态</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="checkbox">
+                <label><input name="gg_status" type="radio" value="1" {if condition="isset($row.gg_status) && $row.gg_status == 1"}checked{/if}>显示</label>
+                <label><input name="gg_status" type="radio" value="0" {if condition="isset($row.gg_status) && $row.gg_status == 0"}checked{/if}>隐藏</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">首页公告</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-content" class="form-control editor" rows="12" name="gonggao">{$row.gonggao|default=''|htmlentities}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">用户协议</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-user_ment" class="form-control editor" rows="12" name="user_ment">{$row.user_ment|default=''|htmlentities}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">隐私政策</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-private_ment" class="form-control editor" rows="12" name="private_ment">{$row.private_ment|default=''|htmlentities}</textarea>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

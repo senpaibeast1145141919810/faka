@@ -1,0 +1,29 @@
+{extend name="../content/tianxie/page/layout/default" /}
+{block name="content"}
+
+<style>
+    .gonggao p{
+        margin-bottom: 8px;
+    }
+</style>
+<div class="nav-lock">
+    <div class="main">
+        <div class="layui-row">
+            <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+                <div class="main-box gonggao" style="padding: 12px 20px;">
+                    <p><span style="text-wrap: nowrap;font-size:20px;color: red"><strong>关于我们</strong></span></p>
+                    {$template_config.user_ment}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{/block}
+
+{block name="footjs"}
+
+{/block}

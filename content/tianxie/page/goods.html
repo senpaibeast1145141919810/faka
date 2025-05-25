@@ -1,0 +1,493 @@
+{extend name="../content/tianxie/page/layout/default" /}
+{block name="head"}
+<script>window.addEventListener('load', function() { document.title = "{$goods.name} 邀请码吧 - 98堂邀请码"; });</script>
+
+<link rel="stylesheet" href="__CDN__/template/tianxie/css/goods.css" />
+<style>
+.number-btn{
+    border: 1px solid #ccc;
+    text-align: center;
+    display: inline-block;
+    line-height: 36px;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+}
+.number-btn:hover{
+    background: #efefef;
+}
+.l-msg{
+    color: #111;
+}
+</style>
+{/block}
+{block name="content"}
+
+<div class="container-xl" id="content">
+
+
+    <div action="/pay.html" method="post" class="layui-row">
+        <div class="bok">
+            <div class="goods-box">
+                <div class="goods-cover">
+                    <div class="layui-col-md4 layui-col-sm12">
+                        <div class="goods-img">
+                            <img class="viewer-pictures" src="{$goods.cover}" onerror="javascript:this.src='/assets/img/none.jpg';" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="goods-param">
+                    <input type="hidden" name="goods_id" value="16">
+                    <div class="layui-col-md8 layui-col-sm12">
+                        <div class="goods-msg">
+                            <!--342-->
+                            <div class="goods-name">
+                                <span>{$goods.name}</span>
+                                {if condition="$template_config.stock"}
+                                <span class="small-tips tips-blue">库存 <span class="init-stock">{$goods.init_stock}</span></span>
+                                {/if}
+                                {if condition="$template_config.sales"}
+                                <span class="small-tips tips-green">销量 {:$goods.invented_sales ? $goods.invented_sales : $goods.sales}</span>
+                                {/if}
+
+                            </div>
+                            <div class="price">
+                                商品单价：
+                                <span class="price-sign">￥</span>
+                                <span class="price-num"><span id="sale-price">{$goods.init_price}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="goods-write">
+
+                <div class="entry notSelection" style="margin-bottom: 10px;">
+                    <div class="input-group order-number-box">
+                        <div class="l-msg" style="line-height: 35px;">购买数量：</div>
+                        <div class="input-group-prepend sub number-btn" data-qty-control="minus">-</div>
+                        <div>
+                            <input type="text" id="buy-num" name="buy_num" style="text-align: center" class="form-control order-number" required="" value="1">
+                        </div>
+
+                        <div class="input-group-append add number-btn" data-qty-control="plus">+</div>
+                    </div>
+                </div>
+                {if condition="$goods.is_sku == 1"}
+                <div class="entry" style="position: relative;">
+
+                    <span class="l-msg" style="top: 15px; position: absolute;">{$goods.sku_name}：</span>
+                    <label class="input" id="buy-specs" style="margin-left: 76px;">
+                        {volist name="$goods.sku" id="vo"}
+                        <span data-stock="{$vo.stock}" data-sku-id="{$vo.id}" style="padding: 8px 20px!important; margin-top: 10px; margin-bottom: 10px;" data-price="{$vo.init_price}" data-crossed="{$vo.price.crossed_price}" class="{eq name='$vo.stock' value='0'}disabled{/eq} select-specs btn {if condition='isset($vo.active)'}active{/if}">{$vo.sku}&yen; {$vo.init_price}</span>
+                        {/volist}
+                    </label>
+                </div>
+                {/if}
+                <div style="margin-bottom: 15px;">
+                    {if condition="$goods.attach"}
+<!--                    <div class="subscribe-tos" style="margin-bottom: 5px;">附加选项</div>-->
+                    {volist name="$goods.attach" id="vo"}
+                    <div class="entry">
+                        <span class="l-msg">{$vo.title}：</span>
+                        <label class="input">
+                            <input type="text" name="attach[]" data-title="{$vo.title}" class="attach-input" placeholder="{$vo.placeholder|default=$vo.title}" />
+                        </label>
+                    </div>
+                    {/volist}
+                    {/if}
+                    {if condition="!$user"}
+                    {if condition="in_array('mobile', $options.buy_input)"}
+                    <div class="entry">
+                        <span class="l-msg">手机号码</span>
+                        <label class="input">
+                            <input type="text" id="mobile" placeholder="请输入您的手机号码" />
+                        </label>
+                    </div>
+                    {/if}
+                    {if condition="in_array('email', $options.buy_input)"}
+                    <div class="entry">
+                        <span class="l-msg">电子邮箱</span>
+                        <label class="input">
+                            <input type="text" id="email" placeholder="请输入您的邮箱地址" />
+                        </label>
+                    </div>
+                    {/if}
+                    {if condition="in_array('password', $options.buy_input)"}
+                    <div class="entry">
+                        <span class="l-msg">查单密码：</span>
+                        <label class="input">
+                            <input type="text" id="password" placeholder="请输入查单密码" />
+                        </label>
+                    </div>
+                    {/if}
+                    <small class="form-hint">请填写真实邮箱。卡密会自动发送到所填写的邮箱中</small>
+                    {/if}
+                </div>
+                {if condition="$goods.wholesale"}
+                <div class="prod-details__specifications" style="margin-top: 15px;user-select: none;">
+                    <div class="specifications">
+                        {volist name="$goods.wholesale" id="vo"}
+                        <div class="alert alert-primary" role="alert" style="display: inline-block; font-size: 13px; padding: 5px 10px; ">
+                            一次性购买{$vo.number}{$goods.unit|default='个'}，每件优惠 &yen; {$vo.offer}
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+                {/if}
+            </div>
+        </div>
+
+        <div class="bok" style="padding-bottom: 5px; user-select: none;">
+            <div  class="variations__list" id="pay-type">
+                {volist name="pay_list" id="vo"}
+                <span class="pay-type btn {eq name='key' value='0'}active{/eq}" data-pay-type="{$vo.value}" style="    padding: 5px 16px;">
+                    {if condition="$vo.value == 'alipay'"}
+                    <span style="float: left;">
+                        <svg style="width: 20px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" t="1647878023515" class="icon" viewBox="0 0 1024 1024" version="1.1" p-id="2739" width="25" height="25"><defs><style type="text/css">@font-face { font-family: feedback-iconfont; src: url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.woff2?t=1630033759944") format("woff2"), url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.woff?t=1630033759944") format("woff"), url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.ttf?t=1630033759944") format("truetype"); }</style></defs><path d="M1023.795 853.64v6.348a163.807 163.807 0 0 1-163.807 163.807h-696.18A163.807 163.807 0 0 1 0 859.988v-696.18A163.807 163.807 0 0 1 163.807 0h696.181a163.807 163.807 0 0 1 163.807 163.807V853.64z" fill="#009FE9" p-id="2740"/><path d="M844.836 648.267c-40.952-14.333-95.623-34.809-156.846-57.128a949.058 949.058 0 0 0 90.094-222.573H573.325V307.14h245.711v-43.41l-245.71 2.458V143.33H472.173c-18.223 0-21.704 20.476-21.704 20.476v102.38H204.759v40.952h245.71v61.427H245.712v40.952h409.518a805.522 805.522 0 0 1-64.909 148.246c-128.384-42.795-266.186-77.604-354.233-55.08a213.564 213.564 0 0 0-112.003 63.27c-95.418 116.917-26.21 294.034 175.274 294.034 119.989 0 236.087-67.366 325.771-177.73 134.322 65.932 398.666 176.297 398.666 176.297V701.3s-32.352-4.095-178.96-53.033z m-563.702 144.97c-158.893 0-204.759-124.699-126.336-194.112a191.86 191.86 0 0 1 90.913-46.276c93.575-10.238 189.811 35.629 293.624 86.614-74.941 94.598-166.674 153.774-258.2 153.774z" fill="#FFFFFF" p-id="2741"/></svg>
+                    </span>
+                    {/if}
+                    {if condition="$vo.value == 'wxpay'"}
+                    <span style="float: left;">
+                        <svg style="width: 20px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" t="1647877815295" class="icon" viewBox="0 0 1024 1024" version="1.1" p-id="1939" width="25" height="25"><defs><style type="text/css">@font-face { font-family: feedback-iconfont; src: url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.woff2?t=1630033759944") format("woff2"), url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.woff?t=1630033759944") format("woff"), url("//at.alicdn.com/t/font_1031158_u69w8yhxdu.ttf?t=1630033759944") format("truetype"); }</style></defs><path d="M395.846 603.585c-3.921 1.98-7.936 2.925-12.81 2.925-10.9 0-19.791-5.85-24.764-14.625l-2.006-3.864-78.106-167.913c-0.956-1.98-0.956-3.865-0.956-5.845 0-7.83 5.928-13.68 13.863-13.68 2.965 0 5.928 0.944 8.893 2.924l91.965 64.43c6.884 3.864 14.82 6.79 23.708 6.79 4.972 0 9.85-0.945 14.822-2.926L861.71 282.479c-77.149-89.804-204.684-148.384-349.135-148.384-235.371 0-427.242 157.158-427.242 351.294 0 105.368 57.361 201.017 147.323 265.447 6.88 4.905 11.852 13.68 11.852 22.45 0 2.925-0.957 5.85-2.006 8.775-6.881 26.318-18.831 69.334-18.831 71.223-0.958 2.92-2.013 6.79-2.013 10.75 0 7.83 5.929 13.68 13.865 13.68 2.963 0 5.928-0.944 7.935-2.925l92.922-53.674c6.885-3.87 14.82-6.794 22.756-6.794 3.916 0 8.889 0.944 12.81 1.98 43.496 12.644 91.012 19.53 139.48 19.53 235.372 0 427.24-157.158 427.24-351.294 0-58.58-17.78-114.143-48.467-163.003l-491.39 280.07-2.963 1.98z" fill="#09BB07" p-id="1940"/></svg>
+                    </span>
+                    {/if}
+
+                    {if condition="$vo.value == 'qqpay'"}
+                    <span style="float: left;">
+                        <svg class="icon" style="width: 20px; margin-top: 3px;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10578"><path d="M512 0C229.224296 0 0 229.224296 0 512s229.224296 512 512 512 512-229.224296 512-512S794.775704 0 512 0zM801.261037 668.86163c-21.731556 18.640593-49.948444-61.345185-54.006519-49.038222-9.879704 29.923556-14.506667 49.929481-43.633778 82.507852-1.554963 1.744593 33.659259 14.468741 43.633778 41.642667 9.557333 26.017185 28.141037 67.26163-93.487407 80.213333-71.35763 7.585185-122.936889-38.020741-128.075852-37.584593-9.53837 0.83437-5.290667 0-15.530667 0-8.38163 0-8.931556 0.606815-16.820148 0-2.161778-0.170667-25.884444 37.584593-131.963259 37.584593-82.223407 0-103.518815-51.749926-86.983111-80.213333 16.535704-28.463407 44.126815-36.750222 40.239407-41.263407-19.152593-22.186667-32.350815-45.909333-40.239407-67.356444-1.953185-5.347556-3.584-10.543407-4.873481-15.530667-2.996148-11.45363-25.884444 67.204741-50.460444 49.038222-24.576-18.166519-22.376296-64.417185-6.46637-108.676741 16.042667-44.619852 56.471704-87.589926 56.926815-97.071407 1.611852-35.290074-3.489185-41.14963 0-50.422519 7.755852-20.764444 17.199407-12.8 17.199407-23.570963 0-135.736889 100.864-245.76 225.28-245.76s225.28 110.042074 225.28 245.76c0 5.195852 13.520593 0 19.986963 23.570963 1.327407 4.873481 2.23763 23.665778 0.663704 50.422519-0.739556 12.856889 34.266074 28.501333 52.375704 97.071407C828.434963 628.754963 810.30637 661.105778 801.261037 668.86163z" fill="#68A5E1" p-id="10579"></path></svg>
+                    </span>
+                    {/if}
+
+                    <span style="float: left; line-height: 26px; margin-left: 8px;">{$vo.name}</span>
+                </span>
+                {/volist}
+                
+                </span>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+                <div class="main-box goods-detail">
+                    <div class="title" style="border-bottom: 1px solid #f7f7f7;padding-bottom: 5px">
+                        <span>商品描述</span>
+                    </div>
+                    <div class="intro">{$goods.detail}</div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="footer_buy">
+            <div class="cons">
+                <a style="display: block;" href="/">
+                    <div>
+                        <img src="data:image/png;base64,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" alt="">
+                        <span>首页</span>
+                    </div>
+                </a>
+                <a style="display: block;" href="{:url('/find_order')}">
+                    <div>
+                        <img src="data:image/png;base64,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" alt="">
+                        <span>查单</span>
+                    </div>
+                </a>
+            </div>
+            <button id="buy-btn" data-goods-id="{$goods.id}" class="to_pay" type="submit" style="font-size: 18px;">立即购买</button>
+        </div>
+    </div>
+
+
+
+
+    <div class="bt-mn-box" style="height: 45px;"></div>
+    <div class="bt-mn">
+        <a class="" href="/">
+            <div class="svg iconfont icon-shouye"></div>
+            <span>首页</span>
+        </a>
+
+        <a class="" href="/order.html">
+            <div class="svg iconfont icon-wenzhang1"></div>
+            <span>订单</span>
+        </a>
+        <a class="" target="_blank" href="">
+            <div class="svg iconfont icon-wode1"></div>
+            <span>联系客服</span>
+        </a>
+    </div>
+
+</div>
+{/block}
+{block name="footjs"}
+<script>
+    $('.to_pay').click(function(){
+        var data = {
+            goods_id: $(this).data('goods-id'), //商品ID
+            num: $('#buy-num').val(), //购买数量
+            sku_id: $('#buy-specs .active').data('sku-id'), //规格
+            pay_type: $('#pay-type .active').data('pay-type'), //支付方式
+            attach: [], //附加选项
+            coupon: $('#coupon-input').val(), //优惠券
+            mobile: $('#mobile').val(), //手机号码
+            email: $('#email').val(), //邮箱
+            password: $('#password').val(), //查单密码
+            test: $('#test').val()
+        };
+        $('.attach-input').each(function(){
+            data.attach.push({title: $(this).data('title'), value: $(this).val()});
+        });
+        layer.load();
+        // console.log(data)
+        $.post("/pay/goods", data, function(e){
+            layer.closeAll();
+            if(e.code == 200){
+                if(e.mode == 'form'){
+                    location.href = "/submit.html?data=" + e.data;
+                }
+                if(e.mode == 'scan'){
+                    location.href = "/scan.html?data=" + e.data;
+                }
+                if(e.mode == 'jump'){
+                    location.href = e.url;
+                }
+            }
+            if(e.code == 201){
+                toastr.success('购买成功');
+                location.href = e.data.url;
+            }
+            if(e.code == 400){
+                toastr.error(e.msg);
+                layer.closeAll();
+                return;
+            }
+        }).fail(function(e){
+            layer.closeAll();
+            toastr.error('请求失败');
+        });
+    });
+
+
+    function subForm( url, params, target){
+        var tempform = document.createElement("form");
+        tempform.action = url;
+        tempform.method = "post";
+        tempform.style.display="none"
+        if(target) {
+            tempform.target = target;
+        }
+        for (var x in params) {
+            var opt = document.createElement("input");
+            opt.name = x;
+            opt.value = params[x];
+            tempform.appendChild(opt);
+        }
+        var opt = document.createElement("input");
+        opt.type = "submit";
+        tempform.appendChild(opt);
+        document.body.appendChild(tempform);
+        tempform.submit();
+        document.body.removeChild(tempform);
+    }
+
+    $('.pay-type').click(function(){
+        if($(this).hasClass('disabled')){
+            toastr.error('未登录用户无法使用余额支付');
+            return false;
+        }
+        var pay_type = $(this).data('pay-type');
+        $('.pay-type').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    $('.select-specs').click(function(){
+        if($(this).hasClass('disabled')){
+            // Toastr.error('库存不足');
+            return false;
+        }
+        $('#buy-num').val(1);
+        var price = $(this).data('price');
+        if(price > 0) {
+            $('#pay-type-box').show();
+        }else{
+            $('#pay-type-box').hide();
+        }
+        var crossed_price = $(this).data('crossed');
+        $('.select-specs').removeClass('active');
+        $(this).addClass('active');
+        $('#sale-price').html(price);
+        $('#reg-price').html(crossed_price);
+        $('#jiesheng').html((crossed_price - price).toFixed(2));
+        $('.init-stock').html($(this).data('stock'));
+        $('#buy-btn').removeAttr('disabled');
+        $('#buy-btn-text').html('立即购买');
+    });
+
+    $(document).on('click', '[data-qty-control]', function(event) {
+        event.preventDefault();
+        let stock = $('.init-stock').html();
+
+        var qty_num = Number($('#buy-num').val());
+        var qty_dir = $(this).data("qty-control");
+        if (qty_dir == "plus") {
+            if(qty_num >= stock){
+                qty_num = stock;
+            }else{
+                qty_num += 1;
+            }
+
+        }else{
+            qty_num = (qty_num <= 1) ? 1 : (qty_num -= 1);
+        }
+        $('#buy-num').val(qty_num);
+    });
+</script>
+
+
+
+
+<!-- 弹窗 -->
+<script>
+    (function($) {
+            $.fn.extend({
+                leanModal: function(options) {
+                    var defaults = {
+                        top: 100,
+                        overlay: 0.5,
+                        closeButton: null
+                    };
+                    var overlay = $("<div id='lean_overlay'></div>");
+                    $("body").append(overlay);
+                    options = $.extend(defaults, options);
+                    return this.each(function() {
+                        var o = options;
+                        $(this).click(function(e) {
+                            var modal_id = $(this).attr("href");
+                            $("#lean_overlay").click(function() {
+                                close_modal(modal_id)
+                            });
+                            $(o.closeButton).click(function() {
+                                close_modal(modal_id)
+                            });
+                            var modal_height = $(modal_id).outerHeight();
+                            var modal_width = $(modal_id).outerWidth();
+                            $("#lean_overlay").css({
+                                "display": "block",
+                                opacity: 0
+                            });
+                            $("#lean_overlay").fadeTo(200, o.overlay);
+                            $(modal_id).css({
+                                "display": "block",
+                                "position": "fixed",
+                                "opacity": 0,
+                                "z-index": 11000,
+                                "left": 50 + "%",
+                                "margin-left": -(modal_width / 2) + "px",
+                                "top": o.top + "px"
+                            });
+                            $(modal_id).fadeTo(200, 1);
+                            e.preventDefault()
+                        })
+                    });
+                    function close_modal(modal_id) {
+                        $("#lean_overlay").fadeOut(200);
+                        $(modal_id).css({
+                            "display": "none"
+                        })
+                    }
+                }
+            })
+        }
+    )(jQuery);
+
+
+
+</script>
+
+<style>
+
+    #lean_overlay {
+        position: fixed;
+        z-index: 10000;
+        top: 0px;
+        left: 0px;
+        height:100%;
+        width:100%;
+        background: #000;
+        display: none;
+    }
+    #alert-html{
+        background: #fff;
+        display: none;
+        position: fixed;
+        opacity: 1;
+        z-index: 11000;
+        left: 50%;
+        width: 800px;
+        top: 10%!important;
+        height: auto;
+        border-radius: 6px;
+    }
+    #alert-html .content img{
+        max-width: 100%;
+    }
+    #alert-html .content{
+        min-height: unset;
+        word-break: break-all;
+    }
+
+    @media screen and (max-width: 700px) {
+
+        /* 在这里写CSS样式，当屏幕宽度小于700px时生效 */
+        #alert-html{
+            background: #fff;
+            display: none;
+            position: fixed;
+            opacity: 1;
+            z-index: 11000;
+            left: 50%;
+            max-width: 96%;
+            top: 10%!important;
+            border-radius: 6px;
+        }
+    }
+
+
+    .modal_close{
+        text-align: center;
+        background: #495057;
+        color: #fff;
+        padding: 14px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        cursor: pointer;
+    }
+
+
+</style>
+<div id="alert-html">
+    <div class="content" style="padding: 15px 25px; overflow: auto;">{$goods['pop_content']}</div>
+
+    <div class="modal_close" href="#">关闭</div>
+</div>
+
+<script>
+
+    var bodyHeight = document.body.clientHeight;
+    var alertHeight = bodyHeight - bodyHeight * 0.3;
+    $('#alert-html > .content').css('max-height', alertHeight + 'px');
+</script>
+
+<a id="alert-btn" rel="alertModal" name="signup" href="#alert-html"></a>
+
+{if condition="!empty($goods.pop_content)"}
+<script>
+    $('a[rel*=alertModal]').leanModal({ top : 200, closeButton: ".modal_close" });
+    $('#alert-btn').click()
+</script>
+{/if}
+{:doAction('goodsFoot')}
+{/block}

@@ -1,0 +1,72 @@
+{extend name="../content/tianxie/page/layout/default" /}
+{block name="content"}
+
+
+
+{if condition="!empty($template_config.gg_status)"}
+<style>
+    .gonggao p{
+        margin-bottom: 8px;
+    }
+</style>
+<div class="nav-lock">
+    <div class="main">
+        <div class="layui-row">
+            <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+                <div class="main-box gonggao" style="padding: 12px 20px;">{$template_config.gonggao}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}
+{php}
+$goods_category = getGoodsCategory();
+$goods = getGoodsAll();
+{/php}
+
+<div class="main">
+    <div class="layui-row">
+        <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+            {volist name="goods_category" id="vo"}
+            <div class="main-box" id="goods" style="margin-top: 10px;">
+                <p class="title-2" style="padding-left: 10px;"><span>{$vo.name}</span></p>
+                <div class="goods">
+                    <div class="goods-list goods-list-1" style="">
+                        {volist name="goods" id="v"}
+                        {if condition="$vo.id == $v.category_id"}
+                        <a href="/goods/{$v.id}.html" data-id="14" data-stock="123" class="goods-box product">
+                            <div class="goodsItem">
+                                <div class="imgBox">
+                                    <img src="{$v.cover}" onerror="javascript:this.src='/assets/img/none.jpg';">
+                                </div>
+                                <div class="goodDesc">
+                                    <div class="goods-name">{$v.name}</div>
+                                    <div class="goods-price">￥{:goodsPrice($v.price, $user, $agency)}</div>
+                                    {if condition="$template_config.sales"}
+                                    <div class="goods-num"><span style="loat: right;">销量 {:$v.invented_sales ? $v.invented_sales : $v.sales}</span></div>
+                                    {/if}
+                                </div>
+                            </div>
+                        </a>
+                        {/if}
+                        {/volist}
+                    </div>
+                </div>
+            </div>
+            {/volist}
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+{/block}
+
+{block name="footjs"}
+
+{/block}
